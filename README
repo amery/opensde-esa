@@ -1,9 +1,9 @@
 Minimal early implementing squashfs+aufs
 ========================================
 
-This project is an [OpenSDE][1] target implementing a minimal
-early userspace system to mount a [squashfs][2] + [aufs][3] rootfs.
+This project is an OpenSDE[1] target implementing a minimal
+early userspace system to mount a squashfs[2] + aufs[3] rootfs.
 
-[1]: http://opensde.net "OpenSDE, System Development Environment"
-[2]: http://squashfs.sourceforge.net/ "Squashfs"
-[3]: http://aufs.sourceforge.net/ "aufs"
+[1]: http://opensde.net/
+[2]: http://squashfs.sourceforge.net/
+[3]: http://aufs.sourceforge.net/
