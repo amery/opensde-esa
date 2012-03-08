@@ -32,7 +32,8 @@ initramfs_install() {
 	shift 3
 
 	case "$pkg_name" in
-	linux-header|autoconf|automake|gmp|mpc|flex)
+	autoconf|automake|flex|gmp|\
+	linux-header|mpc|mpfr)
 		# skip
 		;;
 	*)
