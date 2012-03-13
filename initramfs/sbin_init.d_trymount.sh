@@ -14,7 +14,7 @@
 # --- SDE-COPYRIGHT-NOTE-END ---
 
 root_dev=
-root_type=ext3
+root_type=
 root_mode=
 squashfs=
 
@@ -34,7 +34,13 @@ done
 
 set -e
 
-[ -b "$root_dev" ] || die "no root given"
+[ -n "$root_dev" ] || die "no root given"
+
+TYPE=
+eval $(blkid "$root_dev" 2> /dev/null | grep "^$root_dev: " | cut -d' ' -f2-)
+
+[ -n "$TYPE" ] || die "$root_dev: bad root"
+root_type="$TYPE"
 
 A=/aufs
 R=/rootfs
