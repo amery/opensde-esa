@@ -34,7 +34,7 @@ done
 
 [ -n "$root_dev" ] || die "no root given"
 
-TYPE=
+TYPE= SUB_TYPE=
 eval $(blkid "$root_dev" 2> /dev/null | grep "^$root_dev: " | cut -d' ' -f2-)
 
 [ -n "$TYPE" ] || die "$root_dev: bad root"
@@ -60,6 +60,11 @@ if [ -z "$squashfs" ]; then
 	D="$R"
 else
 	D="$A.real"
+fi
+
+if [ -x "/sbin/fsck.$root_type"  ]; then
+	"/sbin/fsck.$root_type" -a "$root_dev"
+	test $? -lt 4
 fi
 
 set -e
