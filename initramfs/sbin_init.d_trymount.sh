@@ -32,8 +32,6 @@ for x in $(cat /proc/cmdline); do
 	esac
 done
 
-set -e
-
 [ -n "$root_dev" ] || die "no root given"
 
 TYPE=
@@ -59,11 +57,16 @@ mmount() {
 }
 
 if [ -z "$squashfs" ]; then
-	mount2 "$R" "$root_type" ${root_mode:+-o $root_mode} "$root_dev"
-	exit 1
+	D="$R"
+else
+	D="$A.real"
 fi
 
-mount2 "$A.real" "$root_type" ${root_mode:+-o $root_mode} "$root_dev"
+set -e
+
+mount2 "$D" "$root_type" ${root_mode:+-o $root_mode} "$root_dev"
+[ "$D" != "$R" ] || exit 0
+
 mount2 "$A.ro" squashfs -o loop "$A.real$squashfs"
 mount2 "$A.rw" tmpfs "rootfs.rw"
 mount2 "$R" aufs -o "dirs=$A.rw=rw:$A.ro=ro" "rootfs.union"
