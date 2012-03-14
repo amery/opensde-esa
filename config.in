@@ -22,8 +22,7 @@ SDECFGSET_IMAGE='initramfs'
 SDECFGSET_INIT='none'
 SDECFGSET_LIBC='uclibc'
 
-# 1-gmp fails when static
-SDECFGSET_STATIC=0
+SDECFGSET_STATIC=1
 SDECFGSET_OPT='size'
 SDECFGSET_DISABLE_NLS='1'
 
@@ -39,3 +38,7 @@ SDECFGSET_PKG_GCC_JAVA=0
 SDECFGSET_PKG_GCC_F77=0
 SDECFGSET_PKG_GCC_OBJC=0
 SDECFGSET_PKG_CCACHE_USEIT=1
+
+# no toolchain on stage 1
+#
+hack_stages 0- gcc binutils ccache autoconf automake libtool flex gmp mpfr libmpc ppl
