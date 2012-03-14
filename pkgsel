@@ -34,3 +34,6 @@ X gmp
 X mpfr
 X libmpc
 X ppl
+
+# fsck
+X e2fsprogs
