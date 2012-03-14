@@ -17,7 +17,7 @@ initramfs_install_pattern() {
 	shift
 
 	case "$pkg_name" in
-	uclibc|gcc|binutils|libtool)
+	uclibc|gcc|binutils|libtool|e2fsprogs)
 		# dynamic libraries only
 		echo "-n -e 's/\.so\(\.[0-9]\+\)*$/&/p'"
 		;;
@@ -29,12 +29,24 @@ initramfs_install_pattern() {
 
 initramfs_install() {
 	local pkg_name="$1" sandbox="$2" rootfs="$3"
+	local x=
 	shift 3
 
 	case "$pkg_name" in
 	autoconf|automake|flex|gmp|\
 	linux-header|mpc|mpfr)
 		# skip
+		;;
+	e2fsprogs)
+		for x in e2fsck blkid; do
+			cp "$sandbox/sbin/$x" "$rootfs/sbin/"
+		done
+		for x in ext2 ext3 ext4; do
+			ln -s e2fsck "$rootfs/sbin/fsck.$x"
+		done
+
+		# and then the libs
+		return 0
 		;;
 	*)
 		# pass the ball to initramfs_install_pattern
